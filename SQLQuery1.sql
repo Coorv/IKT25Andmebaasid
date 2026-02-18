@@ -121,3 +121,38 @@ select * from Person
 select * from Person where City = 'Gotham'
 --kõik ei ela Gothamis
 select * from Person where City != 'Gotham'
+--variant nr2. Kõik kes ei ela Gothamis
+select * from Person where City <> 'Gotham'
+
+--näitab teatud vanusega inimesi
+--valime 120, 35, 26
+select * from Person where Age in (120, 35, 26)
+select * from Person where Age = 120 or Age = 35 or Age = 26
+
+--soovin näha inimesi vahemikus 22 kuni 41
+select * from Person where Age between 22 and 41
+
+--wildcard e näitab kõik g-tähega linnad
+select * from Person where City like 'g%'
+--otsib emaili @-märgiga
+select * from Person where Email like '%@%'
+--tahan näha, kellel on emailis ees ja peale @-märki üks täht
+select * from Person where Email like '_@_.com'
+--kõik, kelle nimes ei ole esimene täht W, A, S
+select * from Person where name like '[^WAS]%'
+
+--Kõik kes elavad Gothamis ja New Yorkis
+select * from Person where City = 'Gotham' or City = 'New York'
+
+--kõik kes elavad Gothamis ja New Yorkis ja ning peavad olema
+--vanemad kui 29
+select * from Person where (City = 'Gotham' or City = 'New York') and Age > 29
+
+--kuvab tähestikulises järjekorras inimesi ja võtab aluseks
+--Name veeru
+select * from Person
+select * from Person order by Name
+
+--võtab kolm esimest rida Person tabelist
+select top 3 * from Person
+
