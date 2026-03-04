@@ -285,5 +285,82 @@ on Employees.DepartmentId = Department.Id
 group by Location
 
 --rida 257
--- 4 tund
---
+-- 5 tund
+
+--kustutame veeru nimega City Employee tabelis
+
+alter table Employees
+drop column City
+
+--inner join 
+--kuvab neid, kellel on DepartmentName all olemas v‰‰rtus
+--mitte kattuvad read eemaldatakse tulemusest
+--ja sellep‰rast ei n‰idata Jamesi ja Russelit tabelis
+--kuna neil on DepartmentId NULL
+select Name, Gender, Salary, DepartmentName
+from Employees
+inner join Department
+on Employees.DepartmentId = Department.Id
+
+--left join
+select Name, Gender, Salary, DepartmentName
+from Employees
+left join Department --vıib kasutada ka LEFT OUTER JOIN-i
+on Employees.DepartmentId = Department.Id
+--uurige, mis on siis left join
+--n‰itab andmeid, kus vasakpoolsest tabelist isegi siis kui seal puudub
+--vıırvıtme reas v‰‰rtus
+
+--right join
+select Name, Gender, Salary, DepartmentName
+from Employees
+right join Department --vıib kasutada ka RIGHT OUTER JOIN-i
+on Employees.DepartmentId = Department.Id
+--right join n‰itab paremas (Department) tabelis olevad v‰‰rtuseid
+--mis ei ¸hti vasaku (Employees) tabeliga
+
+--outer join
+select Name, Gender, Salary, DepartmentName
+from Employees
+full outer join Department --vıib kasutada ka FULL OUTER JOIN-i
+on Employees.DepartmentId = Department.Id
+--mılema tabeli read kuvab 
+
+--teha cross join
+select Name, Gender, Salary, DepartmentName
+from Employees
+cross join Department 
+--korrutab kıik omavahel l‰bi
+
+-- teha left join, kus Employees tabelist DepartmentId on null
+select Name, Gender, Salary, DepartmentName
+from Employees
+left join Department 
+on Employees.DepartmentId = Department.Id
+where Employees.DepartmentId is null
+
+--teine variant ja sama tulemus
+select Name, Gender, Salary, DepartmentName
+from Employees
+left join Department 
+on Employees.DepartmentId = Department.Id
+where Employees.Department.Id is null
+--n‰itab ainult neid, kellel on vasakus tabelis (Employees)
+--DepartmentId null
+
+select Name, Gender, Salary, DepartmentName
+from Employees
+right join Department 
+on Employees.DepartmentId = Department.Id
+where Employees.DepartmentId is null
+--n‰itab ainult paremas tabelis olevat rida,
+--mis ei kattu Employees-ga.
+
+--full join
+--mılema tabeli mitte-kattuvate v‰‰rtustega read kuvab v‰lja
+select Name, Gender, Salary, DepartmentName
+from Employees
+full outer join Department 
+on Employees.DepartmentId = Department.Id
+where Employees.DepartmentId is null
+or Department.Id is null
